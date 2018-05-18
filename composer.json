@@ -1,0 +1,33 @@
+{
+    "name": "divergence/cli",
+    "description": "Command line interface tool for Divergence Framework",
+    "type": "metapackage",
+    "bin": [
+        "bin/divergence"
+    ],
+    "require": {
+        "divergence/divergence": "dev-master",
+        "league/climate": "^3.4"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../divergence",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Henry Paradiz",
+            "email": "henry.paradiz@gmail.com"
+        }
+    ],
+    "autoload": {
+	    "psr-4": {
+		    "Divergence\\CLI\\": "src"
+	    }
+    }
+}

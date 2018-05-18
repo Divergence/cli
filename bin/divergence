@@ -1,0 +1,5 @@
+#!/usr/bin/env php
+<?php
+define('DIVERGENCE_START', microtime(true));
+require(dirname(__DIR__).'/vendor/autoload.php');
+Divergence\CLI\Command::handle();
