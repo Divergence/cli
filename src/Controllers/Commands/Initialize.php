@@ -88,25 +88,43 @@ class Initialize {
     public static function initAutoloader()
     {
         $climate = Command::getClimate();
-        /*if(!Env::$namespace) {
-            $climate->info('No local autoloaded directory found!');
-            // prompt: do you want to create a new namespace? default: name of this package from composer.json
-            // rerun detection
-            return;
-        }*/
 
         $autoloaders = Env::$autoloaders;
-        
+
+        if(!count($autoloaders)) {
+            $climate->info('No local autoloaded directory found!');
+            // prompt: do you want to create a new namespace? default: name of this package from composer.json
+            $suggestedName = explode('/',Env::$package['name'])[1];
+            $input = $climate->confirm('Do you want to create a namespace called '.$suggestedName.' mapped to directory src?');
+            $input->defaultTo('y');
+            if($input->confirmed()) {
+                Env::$package['autoload']['psr-4'][$suggestedName."\\"] = 'src/';
+                Env::setPKG(getcwd(),Env::$package);
+                Env::getEnvironment();
+                $autoloaders = Env::$autoloaders;
+
+                $input = $climate->confirm('Run composer install to register new autoloaded folder?');
+                $input->defaultTo('y');
+                if($input->confirmed()) {
+                    shell_exec('composer install --ansi');
+                }
+            }
+        }
+
         if(count($autoloaders) === 1) {
             // prompt: found 1 autoloader config. Is this your namespace?
-            dump($autoloaders);
+            $key = array_keys($autoloaders)[0];
+            $climate->info('Found a single autoloaded namespace: '.$key.' => loaded from ./'.$autoloaders[$key]);
+            $input = $climate->confirm('Initialize at this namespace?');
+            
+            $input->defaultTo('y');
+
+            if($input->confirmed()) {
+                Env::$namespace = $key;
+            }
         }
         elseif(count($autoloaders) > 1) {
             // prompt: found count($autoloaders) autoloader configs. Which one is your namespace?
-        }
-
-        if(!count($autoloaders)) {
-            
         }
     }
 

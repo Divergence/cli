@@ -13,7 +13,8 @@ class Env {
 
     public static $autoloaders = null;
 
-    public static function getPKG($path) {
+    public static function findComposerJSON($path)
+    {
         while(!file_exists($path.'/composer.json')) {
             $path = dirname($path);
             if($path == '/') {
@@ -21,7 +22,21 @@ class Env {
             }
         }
         if(file_exists($path.'/composer.json')) {
-            return json_decode(file_get_contents($path.'/composer.json'),true);
+            return $path.'/composer.json';
+        }
+        return false;
+    }
+
+    public static function getPKG($path)
+    {
+        if($composer = static::findComposerJSON($path)) {
+            return json_decode(file_get_contents($composer),true);
+        }
+    }
+
+    public static function setPKG($path,$json) {
+        if($composer = static::findComposerJSON($path)) {
+            file_put_contents($composer, json_encode($json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE));
         }
     }
 
