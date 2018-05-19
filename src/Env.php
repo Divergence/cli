@@ -11,6 +11,8 @@ class Env {
     public static $isRequireDev = false;
     public static $namespace = null;
 
+    public static $autoloaders = null;
+
     public static function getPKG($path) {
         while(!file_exists($path.'/composer.json')) {
             $path = dirname($path);
