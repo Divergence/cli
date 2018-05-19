@@ -1,7 +1,7 @@
 {
     "name": "divergence/cli",
     "description": "Command line interface tool for Divergence Framework",
-    "type": "metapackage",
+    "type": "library",
     "bin": [
         "bin/divergence"
     ],
