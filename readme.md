@@ -1,3 +1,5 @@
+[![Latest Stable Version](https://poser.pugx.org/divergence/cli/downloads)](https://packagist.org/packages/divergence/cli) [![Latest Unstable Version](https://poser.pugx.org/divergence/cli/v/stable)](https://packagist.org/packages/divergence/divergence) [![Total Downloads](https://poser.pugx.org/divergence/cli/v/unstable)](https://packagist.org/packages/divergence/cli) [![License](https://poser.pugx.org/divergence/divergence/license)](https://packagist.org/packages/divergence/cli)
+
 # About
 Command line tool to use with Divergence framework.
 
