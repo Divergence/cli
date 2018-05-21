@@ -12,6 +12,7 @@ namespace Divergence\CLI;
 use Divergence\CLI\Env;
 use Divergence\CLI\Controllers\CommandLineHandler;
 use Divergence\CLI\Controllers\Commands\Basics;
+use Divergence\CLI\Controllers\Commands\Tester;
 use Divergence\CLI\Controllers\Commands\Initialize;
 
 use \League\CLImate\CLImate;
@@ -46,6 +47,10 @@ class Command extends CommandLineHandler
 
             case 'build':
                 // Divergence\Controllers\Builder::handle();
+            break;
+
+            case 'test':
+                Tester::handle();
             break;
 
             case '-v':

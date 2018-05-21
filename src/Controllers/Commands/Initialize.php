@@ -171,12 +171,8 @@ class Initialize {
     public static function initDatabase()
     {
         $climate = Command::getClimate();
-        App::init(getcwd());
-        error_reporting(E_ALL ^E_WARNING ^E_NOTICE); // Fix error reporting cause App::init acts like it's in production
         $config = App::config('db');
-        
         $defaults = require getcwd().'/vendor/divergence/divergence/config/db.php';
-        
         foreach($config as $label=>$dbconf) {
             if($dbconf === $defaults[$label]) {
                 if(in_array($label,['mysql','dev-mysql'])) {

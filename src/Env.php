@@ -9,6 +9,8 @@
  */
 namespace Divergence\CLI;
 
+use Divergence\App;
+
 class Env {
     public static $me; // the command used to launch this binary
     public static $self; // json data from composer.json for \Divergence\Cli
@@ -68,6 +70,9 @@ class Env {
         } else {
             static::$autoloaders = static::getAutoloaders();
         }
+
+        App::init(getcwd());
+        error_reporting(E_ALL ^E_WARNING ^E_NOTICE); // Fix error reporting cause App::init acts like it's in production
     }
 
     public static function getAutoloaders() {

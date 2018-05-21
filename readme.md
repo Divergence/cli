@@ -26,6 +26,9 @@ Divergence Command Line Tool
         init            Bootstraps a new Divergence project.
         status          Shows information on the current project.
         build           A suite of commands for automatically building project components.
+
+        test [subcommand]
+             dbconfig   Checks if DB config works. Asks you to choose a label name or provide one as the next argument.
 ```
 
 ### Contributing To Divergence
