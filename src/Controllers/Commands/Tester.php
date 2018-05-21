@@ -9,7 +9,6 @@
  */
 namespace Divergence\CLI\Controllers\Commands;
 
-use Divergence\App;
 use Divergence\CLI\Env;
 use Divergence\CLI\Command;
 use Divergence\CLI\Controllers\CommandLineHandler;
@@ -37,7 +36,13 @@ class Tester extends CommandLineHandler
     {
         $climate = Command::$climate;
 
-        $configs = App::config('db');
+        try {
+            $configs = Env::getConfig(getcwd(),'db');
+        } catch(\Exception $e) {
+
+            $climate->shout('No database config found! Are you sure this is a project folder?');
+            return;
+        }
         $labels = array_keys($configs);
 
         if (!$label = static::shiftArgs()) {

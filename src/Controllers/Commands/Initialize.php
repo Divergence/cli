@@ -9,7 +9,6 @@
  */
 namespace Divergence\CLI\Controllers\Commands;
 
-use Divergence\App;
 use Divergence\CLI\Env;
 use Divergence\CLI\Command;
 use Divergence\CLI\Controllers\Commands\Database;
@@ -171,7 +170,7 @@ class Initialize
     public static function initDatabase()
     {
         $climate = Command::getClimate();
-        $config = App::config('db');
+        $config = Env::getConfig(getcwd(),'db');
         $defaults = require getcwd().'/vendor/divergence/divergence/config/db.php';
         foreach ($config as $label=>$dbconf) {
             if ($dbconf === $defaults[$label]) {

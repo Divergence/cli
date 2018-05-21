@@ -9,8 +9,6 @@
  */
 namespace Divergence\CLI;
 
-use Divergence\App;
-
 class Env
 {
     public static $me; // the command used to launch this binary
@@ -73,9 +71,15 @@ class Env
         } else {
             static::$autoloaders = static::getAutoloaders();
         }
+    }
 
-        App::init(getcwd());
-        error_reporting(E_ALL ^E_WARNING ^E_NOTICE); // Fix error reporting cause App::init acts like it's in production
+    public static function getConfig($dir,$Label)
+    {
+        $Config = $dir . '/config/' . $Label . '.php';
+        if (!file_exists($Config)) {
+            throw new \Exception($Config . ' not found in '.static::class.'::config()');
+        }
+        return require $Config;
     }
 
     public static function getAutoloaders()
