@@ -160,6 +160,10 @@ class Initialize {
         }
     }
 
+    /*
+     *  detects which database configs are default and starts a wizard for them
+     *  only runs wizard for mysql and dev-mysql during init
+     */
     public static function initDatabase()
     {
         $climate = Command::getClimate();
@@ -173,12 +177,16 @@ class Initialize {
             if($dbconf === $defaults[$label]) {
                 if(in_array($label,['mysql','dev-mysql'])) {
                     $climate->info(sprintf('Detected default database config %s',$label));
-                    static::databaseConfigBuilder($label,$defaults[$label]);
+                    $newConfig = static::databaseConfigBuilder($label,$defaults[$label]);
+                    dump($newConfig);
                 }
             }
         }
     }
 
+    /*
+     *  Asks the user to define a database config with some simple helpers
+     */
     public static function databaseConfigBuilder($label,$defaults)
     {
         $climate = Command::getClimate();
@@ -189,19 +197,45 @@ class Initialize {
         if($input->confirmed()) {
             $suggestedName = explode('/',Env::$package['name'])[1];
 
+            // hostname or socket
             $input = $climate->input(sprintf('Hostname (You can also provide a socket) [<bold>%s</bold>]',$defaults['host']));
             $input->defaultTo($defaults['host']);
             $new['host'] = $input->prompt();
+            if(substr($new['host'], -5) === '.sock') { // if ends with .sock treat as socket
+                $new['socket'] = $new['host'];
+                unset($new['host']);
+            }
+
+            // database name
             $input = $climate->input(sprintf('Database name [<bold>%s</bold>]',$suggestedName));
             $input->defaultTo($suggestedName);
             $new['database'] = $input->prompt();
+
+            // database username
             $input = $climate->input(sprintf('Database username [<bold>%s</bold>]',$suggestedName));
             $input->defaultTo($suggestedName);
             $new['username'] = $input->prompt();
+
+            // database password
             $input = $climate->input('Database password (leave blank to auto-generate)');
             $new['password'] = $input->prompt();
+            if(!$new['password']) {
+                $new['password'] = static::createPassword();
+            }
         }
+        return $new;
+    }
 
-        dump($new);
+    /*
+     *  Uses ascii table chars decimal 33 (!) -> 126 (~)
+     *  covers basic symbols and letters
+     */ 
+    public static function createPassword($length=20)
+    {
+        $password = '';
+        while(strlen($password)<$length) {
+            $password .= chr(mt_rand(33,126));
+        }
+        return $password;
     }
 }
