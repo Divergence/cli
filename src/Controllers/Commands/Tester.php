@@ -10,15 +10,15 @@
 namespace Divergence\CLI\Controllers\Commands;
 
 use Divergence\App;
-use Divergence\CLI\Command;
 use Divergence\CLI\Env;
+use Divergence\CLI\Command;
 use Divergence\CLI\Controllers\CommandLineHandler;
 
 class Tester extends CommandLineHandler
 {
     public static function handle()
     {
-        switch($action = static::shiftArgs()) {
+        switch ($action = static::shiftArgs()) {
             case 'dbconfig':
                 static::dbconfig();
             break;
@@ -33,21 +33,22 @@ class Tester extends CommandLineHandler
         Command::$climate->error($error);
     }
 
-    public static function dbconfig() {
+    public static function dbconfig()
+    {
         $climate = Command::$climate;
 
         $configs = App::config('db');
         $labels = array_keys($configs);
 
-        if(!$label = static::shiftArgs()) {
+        if (!$label = static::shiftArgs()) {
             $input = $climate->radio('Choose a config to test:', $labels);
             $response = $input->prompt();
             
-            if(in_array($response,$labels)) {
+            if (in_array($response, $labels)) {
                 static::testDatabaseConfig($configs[$response]);
             }
         } else {
-            if(in_array($label,$labels)) {
+            if (in_array($label, $labels)) {
                 static::testDatabaseConfig($configs[$label]);
             } else {
                 $climate->yellow('No database config found with that label.');
@@ -55,10 +56,11 @@ class Tester extends CommandLineHandler
         }
     }
 
-    public static function testDatabaseConfig($config) {
+    public static function testDatabaseConfig($config)
+    {
         $climate = Command::$climate;
         $climate->inline('Testing config.......... ');
-        if(Database::connectionTester($config)) {
+        if (Database::connectionTester($config)) {
             $climate->green('Success.');
         } else {
             $climate->red('Failed.');

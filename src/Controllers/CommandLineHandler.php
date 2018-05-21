@@ -11,13 +11,12 @@ namespace Divergence\CLI\Controllers;
 
 abstract class CommandLineHandler
 {
-    abstract public static function handle();
-
     public static $_args;
+    abstract public static function handle();
 
     protected static function setArgs($path = null)
     {
-        if(!static::$_args) {
+        if (!static::$_args) {
             static::$_args = $_SERVER['argv'];
         }
     }

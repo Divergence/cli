@@ -9,9 +9,9 @@
  */
 namespace Divergence\CLI\Controllers\Commands;
 
-use Divergence\CLI\Command;
-use Divergence\CLI\Env;
 use PDO;
+use Divergence\CLI\Env;
+use Divergence\CLI\Command;
 
 class Database
 {
@@ -23,13 +23,13 @@ class Database
             $climate->info('For your reference the config is:');
 
             /* do not remove */
-            dump($config); 
+            dump($config);
             
             $retest = true;
             do { // retest config until success or abort
                 $climate->inline('Testing config.......... ');
                 $valid = static::connectionTester($config);
-                if($valid) {
+                if ($valid) {
                     $climate->green('Success.');
                     return $config;
                 } else {
@@ -38,10 +38,10 @@ class Database
                     $input->defaultTo('y');
                     $retest = $input->confirmed();
                 }
-            } while($retest);
+            } while ($retest);
             $input = $climate->confirm('Continue with untested config?');
             $input->defaultTo('n');
-            if($input->confirmed()) {
+            if ($input->confirmed()) {
                 $valid = true; // human override
             }
         } while (!$valid);
@@ -58,34 +58,34 @@ class Database
         
         $new = [];
             
-        $suggestedName = explode('/',Env::$package['name'])[1];
+        $suggestedName = explode('/', Env::$package['name'])[1];
 
         // hostname or socket
-        $input = $climate->input(sprintf('Hostname (You can also provide a socket) <yellow>[<bold>%s</bold>]</yellow>',$defaults['host']));
+        $input = $climate->input(sprintf('Hostname (You can also provide a socket) <yellow>[<bold>%s</bold>]</yellow>', $defaults['host']));
         $input->defaultTo($defaults['host']);
         $new['host'] = $input->prompt();
-        if(substr($new['host'], -5) === '.sock') { // if ends with .sock treat as socket
+        if (substr($new['host'], -5) === '.sock') { // if ends with .sock treat as socket
             $new['socket'] = $new['host'];
             unset($new['host']);
         }
 
         // database name
-        $input = $climate->input(sprintf('Database name <yellow>[<bold>%s</bold>]</yellow>',$suggestedName));
+        $input = $climate->input(sprintf('Database name <yellow>[<bold>%s</bold>]</yellow>', $suggestedName));
         $input->defaultTo($suggestedName);
         $new['database'] = $input->prompt();
 
         // database username
-        $input = $climate->input(sprintf('Database username <yellow>[<bold>%s</bold>]</yellow>',$suggestedName));
+        $input = $climate->input(sprintf('Database username <yellow>[<bold>%s</bold>]</yellow>', $suggestedName));
         $input->defaultTo($suggestedName);
         $new['username'] = $input->prompt();
 
         // database password
         $input = $climate->input('Database password: ');
         $new['password'] = $input->prompt();
-        if(!$new['password']) {
+        if (!$new['password']) {
             $input = $climate->confirm('Generate one?');
             $input->defaultTo('y');
-            if($input->confirmed()) {
+            if ($input->confirmed()) {
                 $new['password'] = static::createPassword();
             }
         }
@@ -115,12 +115,12 @@ class Database
     /*
      *  Uses ascii table chars decimal 33 (!) -> 126 (~)
      *  covers basic symbols and letters
-     */ 
+     */
     public static function createPassword($length=20)
     {
         $password = '';
-        while(strlen($password)<$length) {
-            $password .= chr(mt_rand(33,126));
+        while (strlen($password)<$length) {
+            $password .= chr(mt_rand(33, 126));
         }
         return $password;
     }

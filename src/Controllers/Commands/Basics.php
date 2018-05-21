@@ -9,8 +9,8 @@
  */
 namespace Divergence\CLI\Controllers\Commands;
 
-use Divergence\CLI\Command;
 use Divergence\CLI\Env;
+use Divergence\CLI\Command;
 
 class Basics
 {
@@ -24,24 +24,24 @@ class Basics
     {
         $climate = Command::getClimate();
 
-        if(!Env::$hasComposer) {
+        if (!Env::$hasComposer) {
             $climate->backgroundYellow()->black()->out("No composer.json detected.");
             return;
         }
 
-        $climate->info(sprintf('Found %s',Env::$package['name']));
+        $climate->info(sprintf('Found %s', Env::$package['name']));
         
-        if(!Env::$isRequired && !Env::$isRequireDev) {
+        if (!Env::$isRequired && !Env::$isRequireDev) {
             $climate->backgroundYellow()->black()->out('Did not find divergence/divergence in composer.json require');
             $climate->backgroundYellow()->black()->out('Run divergence init to bootstrap your project');
             return;
         }
 
-        if(Env::$isRequired) {
+        if (Env::$isRequired) {
             $climate->info('Found divergence/divergence in composer.json require');
         }
 
-        if(Env::$isRequireDev) {
+        if (Env::$isRequireDev) {
             $climate->info('Found divergence/divergence in composer.json require-dev');
         }
     }

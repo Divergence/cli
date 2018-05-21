@@ -10,12 +10,12 @@
 namespace Divergence\CLI;
 
 use Divergence\CLI\Env;
-use Divergence\CLI\Controllers\CommandLineHandler;
+use \League\CLImate\CLImate;
 use Divergence\CLI\Controllers\Commands\Basics;
 use Divergence\CLI\Controllers\Commands\Tester;
-use Divergence\CLI\Controllers\Commands\Initialize;
+use Divergence\CLI\Controllers\CommandLineHandler;
 
-use \League\CLImate\CLImate;
+use Divergence\CLI\Controllers\Commands\Initialize;
 
 class Command extends CommandLineHandler
 {
@@ -36,7 +36,7 @@ class Command extends CommandLineHandler
         //static::$climate->style->addCommand('orange', '38;5;208' /*'38;5;208'*/);
         //static::$climate->orange('test'); exit;
 
-        switch($action = static::shiftArgs()) {
+        switch ($action = static::shiftArgs()) {
             case 'init':
                 Initialize::init();
             break;
