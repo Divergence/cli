@@ -7,12 +7,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Divergence\CLI\Controllers\Commands;
 
 use Divergence\App;
 use Divergence\CLI\Command;
 use Divergence\CLI\Env;
+use Divergence\CLI\Controllers\Commands\Database;
 
 /*
  *  @package Divergence\CLI
@@ -32,7 +32,6 @@ class Initialize {
 
         if(Env::$isRequired) {
             $climate->info('divergence/divergence is already in your composer.json require.');
-            $climate->info('Run composer install && composer update if you have not already.');
         } else {
             $climate->info('divergence/divergence is not in your composer.json require.');
             $input = $climate->confirm('Do you want to run composer require divergence/divergence for this project?');
@@ -51,6 +50,11 @@ class Initialize {
         static::initDatabase();
     }
 
+    /*
+     *  Copies default bootstrap files from the framework's
+     *  vendor directory if they aren't already there.
+     *
+     */
     public static function initDirectories()
     {
         $climate = Command::getClimate();
@@ -96,7 +100,7 @@ class Initialize {
                 $freshInstall = false;
             }
         } else {
-            $climate->info('Looks like this project has been bootstrapped.');
+            $climate->info('Looks like this project has already been bootstrapped.');
         }
     }
 
@@ -146,7 +150,7 @@ class Initialize {
         // if only one autoloader ask if we should use this to initialize
         if(count($autoloaders) === 1) {
             $key = array_keys($autoloaders)[0];
-            $climate->info('Found a single autoloaded namespace: '.$key.' => loaded from ./'.$autoloaders[$key]);
+            $climate->info(sprintf('Found a single autoloaded namespace: <bold><yellow>%s</yellow></bold> => loaded from <yellow>./%s</yellow>',$key,$autoloaders[$key]));
             $input = $climate->confirm('Initialize at this namespace?');
             
             $input->defaultTo('y');
@@ -161,14 +165,14 @@ class Initialize {
     }
 
     /*
-     *  detects which database configs are default and starts a wizard for them
-     *  only runs wizard for mysql and dev-mysql during init
+     *  Detects which database configs are default and starts a wizard for them
+     *  Only runs wizard for mysql and dev-mysql during init
      */
     public static function initDatabase()
     {
         $climate = Command::getClimate();
         App::init(getcwd());
-        error_reporting(E_ALL ^E_WARNING ^E_NOTICE); // fix error reporting cause App::init acts like it's in production
+        error_reporting(E_ALL ^E_WARNING ^E_NOTICE); // Fix error reporting cause App::init acts like it's in production
         $config = App::config('db');
         
         $defaults = require getcwd().'/vendor/divergence/divergence/config/db.php';
@@ -177,65 +181,14 @@ class Initialize {
             if($dbconf === $defaults[$label]) {
                 if(in_array($label,['mysql','dev-mysql'])) {
                     $climate->info(sprintf('Detected default database config %s',$label));
-                    $newConfig = static::databaseConfigBuilder($label,$defaults[$label]);
-                    dump($newConfig);
+                    $input = $climate->confirm('Build database config <bold><yellow>'.$label.'</yellow></bold>?');
+                    $input->defaultTo('y');
+                    $thisConfig = $defaults[$label]; // use default
+                    if($input->confirmed()) {
+                        Database::wizard($thisConfig);
+                    }
                 }
-            }
-        }
-    }
-
-    /*
-     *  Asks the user to define a database config with some simple helpers
-     */
-    public static function databaseConfigBuilder($label,$defaults)
-    {
-        $climate = Command::getClimate();
-        $input = $climate->inline('Config database config '.$label.'?');
-        $input->defaultTo('y');
-        $climate->bold('Configuring '.$label);
-        $new = [];
-        if($input->confirmed()) {
-            $suggestedName = explode('/',Env::$package['name'])[1];
-
-            // hostname or socket
-            $input = $climate->input(sprintf('Hostname (You can also provide a socket) [<bold>%s</bold>]',$defaults['host']));
-            $input->defaultTo($defaults['host']);
-            $new['host'] = $input->prompt();
-            if(substr($new['host'], -5) === '.sock') { // if ends with .sock treat as socket
-                $new['socket'] = $new['host'];
-                unset($new['host']);
-            }
-
-            // database name
-            $input = $climate->input(sprintf('Database name [<bold>%s</bold>]',$suggestedName));
-            $input->defaultTo($suggestedName);
-            $new['database'] = $input->prompt();
-
-            // database username
-            $input = $climate->input(sprintf('Database username [<bold>%s</bold>]',$suggestedName));
-            $input->defaultTo($suggestedName);
-            $new['username'] = $input->prompt();
-
-            // database password
-            $input = $climate->input('Database password (leave blank to auto-generate)');
-            $new['password'] = $input->prompt();
-            if(!$new['password']) {
-                $new['password'] = static::createPassword();
-            }
-        }
-        return $new;
-    }
-
-    /*
-     *  Uses ascii table chars decimal 33 (!) -> 126 (~)
-     *  covers basic symbols and letters
-     */ 
-    public static function createPassword($length=20)
-    {
-        $password = '';
-        while(strlen($password)<$length) {
-            $password .= chr(mt_rand(33,126));
-        }
-        return $password;
+            } // if
+        } // foreach
     }
 }

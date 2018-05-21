@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the Divergence package.
+ *
+ * (c) Henry Paradiz <henry.paradiz@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Divergence\CLI;
 
 use Divergence\CLI\Env;
@@ -24,6 +32,8 @@ class Command extends CommandLineHandler
         Env::$me = static::shiftArgs();
 
         static::$climate = new CLImate();
+        //static::$climate->style->addCommand('orange', '38;5;208' /*'38;5;208'*/);
+        //static::$climate->orange('test'); exit;
 
         switch($action = static::shiftArgs()) {
             case 'init':
