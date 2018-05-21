@@ -1,5 +1,14 @@
 #!/usr/bin/env php
 <?php
 define('DIVERGENCE_START', microtime(true));
-require(dirname(__DIR__).'/vendor/autoload.php');
+if (file_exists(dirname(__DIR__).'/vendor/autoload.php')) { // attempt local vendor directory first
+    require(dirname(__DIR__).'/vendor/autoload.php');
+}
+elseif (dirname(dirname(dirname(__DIR__))).'/vendor/autoload.php') { // global installation
+    require(dirname(dirname(dirname(__DIR__))).'/vendor/autoload.php');
+}
+else {
+    echo "Can't find the vendor directory!\n";
+    exit;
+}
 Divergence\CLI\Command::handle();
