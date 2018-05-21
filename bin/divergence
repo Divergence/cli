@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+error_reporting(E_ALL ^E_WARNING ^E_NOTICE);
 define('DIVERGENCE_START', microtime(true));
 if (file_exists(dirname(__DIR__).'/vendor/autoload.php')) { // attempt local vendor directory first
     require(dirname(__DIR__).'/vendor/autoload.php');
