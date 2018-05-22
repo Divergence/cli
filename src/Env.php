@@ -73,7 +73,7 @@ class Env
         }
     }
 
-    public static function getConfig($dir,$Label)
+    public static function getConfig($dir, $Label)
     {
         $Config = $dir . '/config/' . $Label . '.php';
         if (!file_exists($Config)) {

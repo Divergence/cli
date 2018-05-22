@@ -38,8 +38,8 @@ class Config extends CommandLineHandler
         $climate = Command::$climate;
 
         try {
-            $configs = Env::getConfig(getcwd(),'db');
-        } catch(\Exception $e) {
+            $configs = Env::getConfig(getcwd(), 'db');
+        } catch (\Exception $e) {
             $climate->shout('No database config found! Are you sure this is a project folder?');
             return;
         }
@@ -50,25 +50,25 @@ class Config extends CommandLineHandler
             $response = $input->prompt();
             dump($configs[$response]);
             if (in_array($response, $labels)) {
-                static::wizardAndSave($response,$configs[$response]);
+                static::wizardAndSave($response, $configs[$response]);
             }
         } else {
             if (in_array($label, $labels)) {
-                static::wizardAndSave($label,$configs[$label]);
+                static::wizardAndSave($label, $configs[$label]);
             } else {
                 $climate->yellow('No database config found with that label.');
             }
         }
     }
 
-    public static function wizardAndSave($label,$config)
+    public static function wizardAndSave($label, $config)
     {
         $climate = Command::$climate;
         $config = Database::wizard($config);
         $input = $climate->confirm('Save this config?');
         $input->defaultTo('y');
         if ($input->confirmed()) {
-            ConfigWriter::configWriter($label,$config);
+            ConfigWriter::configWriter($label, $config);
         }
         return $config;
     }

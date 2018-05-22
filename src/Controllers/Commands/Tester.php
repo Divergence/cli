@@ -37,9 +37,8 @@ class Tester extends CommandLineHandler
         $climate = Command::$climate;
 
         try {
-            $configs = Env::getConfig(getcwd(),'db');
-        } catch(\Exception $e) {
-
+            $configs = Env::getConfig(getcwd(), 'db');
+        } catch (\Exception $e) {
             $climate->shout('No database config found! Are you sure this is a project folder?');
             return;
         }

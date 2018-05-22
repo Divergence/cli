@@ -19,18 +19,19 @@ Divergence Command Line Tool
 
 
         Available Arguments
-        --version, -v           Version information
+        --version, -v		Version information
 
-        help, --help, -h        This help information
+        help, --help, -h	This help information
 
         Available Commands
 
-        init            Bootstraps a new Divergence project.
-        status          Shows information on the current project.
-        build           A suite of commands for automatically building project components.
+        init		Bootstraps a new Divergence project.
+        status		Shows information on the current project.
 
-        test [subcommand]
-             dbconfig   Checks if DB config works. Asks you to choose a label name or provide one as the next argument.
+        config		database	Reconfigure database setting.
+
+        test [subcommand]		
+            dbconfig	Checks if DB config works. Asks you to choose a label name or provide one as the next argument.
 ```
 
 ### Contributing To Divergence
