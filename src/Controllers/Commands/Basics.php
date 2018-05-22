@@ -62,7 +62,9 @@ class Basics
         $climate->out('');
         $climate->out("\tinit\t\tBootstraps a new Divergence project.");
         $climate->out("\tstatus\t\tShows information on the current project.");
-        $climate->out("\tbuild\t\tA suite of commands for automatically building project components.");
+        $climate->out('');
+        $climate->out("\tconfig\t\tdatabase\tReconfigure database setting.");
+        //$climate->out("\tbuild\t\tA suite of commands for automatically building project components.");
         $climate->out('');
         $climate->out("\ttest [subcommand]\t\t");
         $climate->out("\t     dbconfig\tChecks if DB config works. Asks you to choose a label name or provide one as the next argument.");

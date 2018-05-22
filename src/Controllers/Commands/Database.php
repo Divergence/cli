@@ -12,6 +12,7 @@ namespace Divergence\CLI\Controllers\Commands;
 use PDO;
 use Divergence\CLI\Env;
 use Divergence\CLI\Command;
+use Divergence\CLI\ConfigWriter;
 
 class Database
 {
@@ -57,8 +58,6 @@ class Database
         $climate = Command::getClimate();
         
         $new = [];
-            
-        $suggestedName = explode('/', Env::$package['name'])[1];
 
         // hostname or socket
         $input = $climate->input(sprintf('Hostname (You can also provide a socket) <yellow>[<bold>%s</bold>]</yellow>', $defaults['host']));
@@ -70,13 +69,13 @@ class Database
         }
 
         // database name
-        $input = $climate->input(sprintf('Database name <yellow>[<bold>%s</bold>]</yellow>', $suggestedName));
-        $input->defaultTo($suggestedName);
+        $input = $climate->input(sprintf('Database name <yellow>[<bold>%s</bold>]</yellow>', $defaults['database']));
+        $input->defaultTo($defaults['database']);
         $new['database'] = $input->prompt();
 
         // database username
-        $input = $climate->input(sprintf('Database username <yellow>[<bold>%s</bold>]</yellow>', $suggestedName));
-        $input->defaultTo($suggestedName);
+        $input = $climate->input(sprintf('Database username <yellow>[<bold>%s</bold>]</yellow>', $defaults['username']));
+        $input->defaultTo($defaults['username']);
         $new['username'] = $input->prompt();
 
         // database password

@@ -12,6 +12,7 @@ namespace Divergence\CLI\Controllers\Commands;
 use Divergence\CLI\Env;
 use Divergence\CLI\Command;
 use Divergence\CLI\Controllers\Commands\Database;
+use Divergence\CLI\ConfigWriter;
 
 /*
  *  @package Divergence\CLI
@@ -112,6 +113,7 @@ class Initialize
      */
     public static function installAutoloader()
     {
+        $climate = Command::getClimate();
         $suggestedName = explode('/', Env::$package['name'])[1];
         $input = $climate->confirm('Do you want to create a namespace called '.$suggestedName.' mapped to directory src?');
         $input->defaultTo('y');
@@ -178,9 +180,15 @@ class Initialize
                     $climate->info(sprintf('Detected default database config %s', $label));
                     $input = $climate->confirm('Build database config <bold><yellow>'.$label.'</yellow></bold>?');
                     $input->defaultTo('y');
-                    $thisConfig = $defaults[$label]; // use default
+                    $thisConfig = $defaults[$label]; // derive default
+                    $thisConfig['database'] = $thisConfig['username'] = explode('/', Env::$package['name'])[1]; // set default
                     if ($input->confirmed()) {
-                        Database::wizard($thisConfig);
+                        $thisConfig = Database::wizard($thisConfig);
+                        $input = $climate->confirm('Save this config?');
+                        $input->defaultTo('y');
+                        if ($input->confirmed()) {
+                            ConfigWriter::configWriter($label,$thisConfig);
+                        }
                     }
                 }
             } // if
