@@ -1,7 +1,6 @@
-[![Latest Stable Version](https://poser.pugx.org/divergence/cli/downloads)](https://packagist.org/packages/divergence/cli) [![Latest Unstable Version](https://poser.pugx.org/divergence/cli/v/stable)](https://packagist.org/packages/divergence/divergence) [![Total Downloads](https://poser.pugx.org/divergence/cli/v/unstable)](https://packagist.org/packages/divergence/cli) [![License](https://poser.pugx.org/divergence/divergence/license)](https://packagist.org/packages/divergence/cli)
+[![Latest Stable Version](https://poser.pugx.org/divergence/cli/downloads)](https://packagist.org/packages/divergence/cli) [![Latest Unstable Version](https://poser.pugx.org/divergence/cli/v/stable)](https://packagist.org/packages/divergence/divergence) [![Total Downloads](https://poser.pugx.org/divergence/cli/v/unstable)](https://packagist.org/packages/divergence/cli) [![License](https://poser.pugx.org/divergence/divergence/license)](https://packagist.org/packages/divergence/cli) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Divergence/cli/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Divergence/cli/?branch=master) 
 
 # About
-[![Latest Stable Version](https://poser.pugx.org/divergence/cli/v/stable)](https://packagist.org/packages/divergence/cli) [![Total Downloads](https://poser.pugx.org/divergence/cli/downloads)](https://packagist.org/packages/divergence/cli) [![License](https://poser.pugx.org/divergence/cli/license)](https://packagist.org/packages/divergence/cli) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Divergence/cli/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Divergence/cli/?branch=master) 
 
 Command line tool to use with Divergence framework.
 
