@@ -1,11 +1,11 @@
-[![Latest Stable Version](https://poser.pugx.org/divergence/cli/downloads)](https://packagist.org/packages/divergence/cli) [![Latest Unstable Version](https://poser.pugx.org/divergence/cli/v/stable)](https://packagist.org/packages/divergence/divergence) [![Total Downloads](https://poser.pugx.org/divergence/cli/v/unstable)](https://packagist.org/packages/divergence/cli) [![License](https://poser.pugx.org/divergence/divergence/license)](https://packagist.org/packages/divergence/cli) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Divergence/cli/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Divergence/cli/?branch=master) 
+[![Latest Stable Version](https://poser.pugx.org/divergence/cli/downloads)](https://packagist.org/packages/divergence/cli) [![Latest Unstable Version](https://poser.pugx.org/divergence/cli/v/stable)](https://packagist.org/packages/divergence/divergence) [![Total Downloads](https://poser.pugx.org/divergence/cli/v/unstable)](https://packagist.org/packages/divergence/cli) [![License](https://poser.pugx.org/divergence/divergence/license)](https://packagist.org/packages/divergence/cli) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Divergence/cli/badges/quality-score.png?b=release)](https://scrutinizer-ci.com/g/Divergence/cli/?branch=release) 
 
 # About
 
 Command line tool to use with Divergence framework.
 
 ## [Documentation](https://github.com/Divergence/docs#divergence-framework-documentation)
-## [Getting Started](https://github.com/Divergence/docs/blob/master/gettingstarted.md#getting-started)
+## [Getting Started](https://github.com/Divergence/docs/blob/release/gettingstarted.md#getting-started)
 
 # Install
 ```
