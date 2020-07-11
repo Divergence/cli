@@ -6,7 +6,7 @@
         "bin/divergence"
     ],
     "require": {
-        "divergence/divergence": ">=0.0.1",
+        "divergence/divergence": "*",
         "league/climate": "^3.4",
         "nikic/php-parser": "^4.0"
     },
