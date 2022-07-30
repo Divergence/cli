@@ -59,10 +59,10 @@ class Env
             static::$hasComposer = true;
         }
         
-        if (in_array('divergence/divergence', array_keys(static::$package['require']))) {
+        if (!empty(static::$package['require']) && in_array('divergence/divergence', array_keys(static::$package['require']))) {
             static::$isRequired = true;
         }
-        if (in_array('divergence/divergence', array_keys(static::$package['require-dev']))) {
+        if (!empty(static::$package['require-dev']) && in_array('divergence/divergence', array_keys(static::$package['require-dev']))) {
             static::$isRequireDev = true;
         }
 
@@ -77,7 +77,7 @@ class Env
     {
         $Config = $dir . '/config/' . $Label . '.php';
         if (!file_exists($Config)) {
-            throw new \Exception($Config . ' not found in '.static::class.'::config()');
+            throw new \Exception($Config . ' not found in '.static::class.'::config(). Does this process have write permissions?');
         }
         return require $Config;
     }
