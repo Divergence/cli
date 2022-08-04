@@ -104,7 +104,7 @@ class ConfigWriter
      */
     public static function tokensToString($tokens)
     {
-        $output;
+        $output = '';
         foreach ($tokens as $token) {
             if (is_array($token)) {
                 $output .= $token[1];
@@ -123,13 +123,14 @@ class ConfigWriter
         //$climate = Command::getClimate();
         $depth = 0;
         $returnTokens = [];
+        $nextKey = true;
         foreach ($tokens as $key=>$token) {
             if ($token == '[') {
                 $depth++;
                 continue;
             }
             // find config label
-            if ($depth === 1 && $token[0]==323) { // T_CONSTANT_ENCAPSED_STRING
+            if ($depth === 1 && is_int($token[0]) && token_name($token[0])=="T_CONSTANT_ENCAPSED_STRING") {
                 $strValue = substr($token[1], 1, -1);
                 if ($strValue == $label) {
                     $labelLine = $token[2]; // remember line # where the config we care about starts
@@ -138,8 +139,8 @@ class ConfigWriter
             }
 
             // find key value pair
-            if ($labelLine) {
-                if ($depth === 2 && $token[0]==323) {
+            if (!empty($labelLine)) {
+                if ($depth === 2 && is_int($token[0]) && token_name($token[0])=="T_CONSTANT_ENCAPSED_STRING") {
                     if ($nextKey) {
                         $nextKey = false;
                         // found key for setting

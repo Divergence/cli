@@ -24,6 +24,10 @@
         {
             "name": "Henry Paradiz",
             "email": "henry.paradiz@gmail.com"
+        },
+        {
+            "name": "Jack Smith",
+            "email": "jgs41495@gmail.com"
         }
     ],
     "autoload": {

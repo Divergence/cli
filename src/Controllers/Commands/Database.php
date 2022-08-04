@@ -96,10 +96,10 @@ class Database
      */
     public static function connectionTester($config)
     {
-        if ($config['socket']) {
+        if (!empty($config['socket'])) {
             $DSN = 'mysql:unix_socket=' . $config['socket'] . ';dbname=' . $config['database'];
         } else {
-            $DSN = 'mysql:host=' . $config['host'] . ';port=' . $config['port'] .';dbname=' . $config['database'];
+            $DSN = 'mysql:host=' . $config['host'] . ';port=' . ($config['port'] ?? 3306) .';dbname=' . $config['database'];
         }
         
         try {
