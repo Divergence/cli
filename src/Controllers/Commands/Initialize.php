@@ -96,7 +96,9 @@ class Initialize
                         mkdir(dirname($dest), 0777, true);
                     }
                     $climate->info($dest);
-                    copy($source, $dest);
+                    if(!copy($source, $dest)) {
+                        throw new \Exception('Unable to create file '.$dest.'. Is your composer set up correctly?');
+                    }
                 }
                 $freshInstall = false;
             }

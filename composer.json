@@ -6,14 +6,14 @@
         "bin/divergence"
     ],
     "require": {
-        "divergence/divergence": ">=0.0.1",
+        "divergence/divergence": "*",
         "league/climate": "^3.4",
         "nikic/php-parser": "^4.0"
     },
     "repositories": [
         {
             "type": "path",
-            "url": "../divergence",
+            "url": "../framework",
             "options": {
                 "symlink": true
             }
@@ -24,11 +24,17 @@
         {
             "name": "Henry Paradiz",
             "email": "henry.paradiz@gmail.com"
+        },
+        {
+            "name": "Jack Smith",
+            "email": "jgs41495@gmail.com"
         }
     ],
     "autoload": {
 	    "psr-4": {
 		    "Divergence\\CLI\\": "src"
 	    }
-    }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }

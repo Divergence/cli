@@ -18,7 +18,7 @@ class Tester extends CommandLineHandler
     public static function handle()
     {
         switch ($action = static::shiftArgs()) {
-            case 'dbconfig':
+            case 'database':
                 static::dbconfig();
             break;
 

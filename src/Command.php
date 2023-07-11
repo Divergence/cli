@@ -29,13 +29,16 @@ class Command extends CommandLineHandler
 
     public static function handle()
     {
-        Env::getEnvironment();
+        static::$climate = new CLImate();
+        try {
+            Env::getEnvironment();
+        } catch(\Exception $e) {
+            static::$climate->error(PHP_EOL.$e->getMessage().PHP_EOL);
+            return Basics::usage();
+        }
+        
 
         Env::$me = static::shiftArgs();
-
-        static::$climate = new CLImate();
-        //static::$climate->style->addCommand('orange', '38;5;208' /*'38;5;208'*/);
-        //static::$climate->orange('test'); exit;
 
         switch ($action = static::shiftArgs()) {
             case 'init':
