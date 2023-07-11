@@ -13,7 +13,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../divergence",
+            "url": "../framework",
             "options": {
                 "symlink": true
             }
@@ -34,5 +34,7 @@
 	    "psr-4": {
 		    "Divergence\\CLI\\": "src"
 	    }
-    }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }

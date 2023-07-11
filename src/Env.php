@@ -58,6 +58,11 @@ class Env
         if (static::$package) {
             static::$hasComposer = true;
         }
+
+        if (static::$self === static::$package) {
+            throw new \Exception('The divergence command is meant to run from the directory of your new project.');
+            return;
+        }
         
         if (!empty(static::$package['require']) && in_array('divergence/divergence', array_keys(static::$package['require']))) {
             static::$isRequired = true;
